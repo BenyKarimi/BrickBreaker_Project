@@ -45,7 +45,7 @@ public class MainMenuPanel extends JPanel {
         button1.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                frame.setContentPane(new GameStarterPanel());
+                frame.setContentPane(new GameStarterPanel(frame));
                 frame.pack();
                 frame.repaint();
                 frame.revalidate();
