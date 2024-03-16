@@ -16,7 +16,7 @@ public class GameStarterPanel extends JPanel {
     String name;
     public GameStarterPanel(JFrame frame) {
         this.frame = frame;
-        ball = new Color(255, 224, 0);
+        ball = new Color(255, 70, 70);
 
         JButton toMain = new JButton("Back");
         toMain.setContentAreaFilled(false);
@@ -34,22 +34,16 @@ public class GameStarterPanel extends JPanel {
                 frame.revalidate();
                 frame.repaint();
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
-
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 toMain.setFont(new Font(toMain.getFont().getFontName(), Font.BOLD, 25));
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 toMain.setFont(new Font(toMain.getFont().getFontName(), Font.BOLD, 20));
@@ -59,7 +53,7 @@ public class GameStarterPanel extends JPanel {
         JLabel label = new JLabel("Level");
         label.setFont(new Font("akashi", Font.BOLD, 45));
         label.setForeground(new Color(255, 224, 0));
-        label.setBounds(150, 186, 500, 50);
+        label.setBounds(120, 186, 500, 50);
 
         button1 = new JButton("Easy");
         button1.setContentAreaFilled(false);
@@ -68,7 +62,7 @@ public class GameStarterPanel extends JPanel {
         button1.setFocusable(false);
         button1.setFont(new Font("akashi", Font.BOLD, 35));
         button1.setForeground(new Color(255, 224, 0));
-        button1.setBounds(155, 120, 500, 50);
+        button1.setBounds(125, 120, 500, 50);
         button1.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -77,22 +71,16 @@ public class GameStarterPanel extends JPanel {
                 button2.setForeground(new Color(255, 224, 0));
                 button3.setForeground(new Color(255, 224, 0));
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
-
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 button1.setFont(new Font(button1.getFont().getFontName(), Font.BOLD, 40));
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 button1.setFont(new Font(button1.getFont().getFontName(), Font.BOLD, 35));
@@ -106,7 +94,7 @@ public class GameStarterPanel extends JPanel {
         button2.setFocusable(false);
         button2.setFont(new Font("akashi", Font.BOLD, 35));
         button2.setForeground(new Color(255, 224, 0));
-        button2.setBounds(155, 190, 500, 50);
+        button2.setBounds(125, 190, 500, 50);
         button2.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -115,22 +103,16 @@ public class GameStarterPanel extends JPanel {
                 button1.setForeground(new Color(255, 224, 0));
                 button3.setForeground(new Color(255, 224, 0));
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
-
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 button2.setFont(new Font(button2.getFont().getFontName(), Font.BOLD, 40));
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 button2.setFont(new Font(button2.getFont().getFontName(), Font.BOLD, 35));
@@ -144,7 +126,7 @@ public class GameStarterPanel extends JPanel {
         button3.setFocusable(false);
         button3.setFont(new Font("akashi", Font.BOLD, 35));
         button3.setForeground(new Color(255, 224, 0));
-        button3.setBounds(145, 260, 500, 50);
+        button3.setBounds(125, 260, 500, 50);
         button3.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -153,22 +135,16 @@ public class GameStarterPanel extends JPanel {
                 button1.setForeground(new Color(255, 224, 0));
                 button2.setForeground(new Color(255, 224, 0));
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
-
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 button3.setFont(new Font(button3.getFont().getFontName(), Font.BOLD, 40));
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 button3.setFont(new Font(button3.getFont().getFontName(), Font.BOLD, 35));
@@ -182,7 +158,7 @@ public class GameStarterPanel extends JPanel {
         ball_color.setFocusable(false);
         ball_color.setFont(new Font("akashi", Font.BOLD, 45));
         ball_color.setForeground(new Color(255, 224, 0));
-        ball_color.setBounds(145, 400, 500, 50);
+        ball_color.setBounds(120, 375, 500, 50);
         ball_color.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -190,22 +166,16 @@ public class GameStarterPanel extends JPanel {
                 if (color != null) ball = color;
                 repaint();
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
-
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 ball_color.setFont(new Font(ball_color.getFont().getFontName(), Font.BOLD, 50));
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 ball_color.setFont(new Font(ball_color.getFont().getFontName(), Font.BOLD, 45));
@@ -215,7 +185,7 @@ public class GameStarterPanel extends JPanel {
         JLabel label1 = new JLabel("Enter name");
         label1.setFont(new Font("akashi", Font.BOLD, 45));
         label1.setForeground(new Color(255, 224, 0));
-        label1.setBounds(245, 600, 500, 50);
+        label1.setBounds(225, 575, 500, 50);
 
         JTextField textField = new JTextField();
         textField.setOpaque(false);
@@ -224,7 +194,7 @@ public class GameStarterPanel extends JPanel {
         textField.setCaretColor(Color.BLACK);
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(new Font("akashi", Font.BOLD, 20));
-        textField.setBounds(235, 670, 300, 50);
+        textField.setBounds(215, 650, 300, 50);
 
         JButton submit = new JButton("Submit");
         submit.setContentAreaFilled(false);
@@ -233,34 +203,30 @@ public class GameStarterPanel extends JPanel {
         submit.setFocusable(false);
         submit.setFont(new Font("akashi", Font.BOLD, 25));
         submit.setForeground(new Color(255, 224, 0));
-        submit.setBounds(135, 725, 500, 50);
+        submit.setBounds(115, 705, 500, 50);
         submit.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                submit.setForeground(new Color(255, 70, 70));
                 if (textField.getText().equals("")) {
                     JOptionPane.showMessageDialog(frame, "Please fill the text-field !", "WARNING" ,JOptionPane.WARNING_MESSAGE);
                 }
                 else name = textField.getText();
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
-
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 submit.setFont(new Font(submit.getFont().getFontName(), Font.BOLD, 30));
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 submit.setFont(new Font(submit.getFont().getFontName(), Font.BOLD, 25));
+                submit.setForeground(new Color(255, 224, 0));
             }
         });
 
@@ -271,7 +237,7 @@ public class GameStarterPanel extends JPanel {
         start_button.setFocusable(false);
         start_button.setFont(new Font("akashi", Font.BOLD, 45));
         start_button.setForeground(new Color(255, 224, 0));
-        start_button.setBounds(135, 850, 500, 50);
+        start_button.setBounds(115, 825, 500, 50);
         start_button.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -283,28 +249,22 @@ public class GameStarterPanel extends JPanel {
 
                 }
                 else {
-                    frame.setContentPane(new GamePanel());
+                    frame.setContentPane(new GamePanel(frame, level, ball));
                     frame.pack();
                     frame.revalidate();
                     frame.repaint();
                 }
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
-
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 start_button.setFont(new Font(start_button.getFont().getFontName(), Font.BOLD, 50));
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 start_button.setFont(new Font(start_button.getFont().getFontName(), Font.BOLD, 45));
@@ -312,7 +272,7 @@ public class GameStarterPanel extends JPanel {
         });
 
         image = new ImageIcon("Imported things/BackGround.png").getImage();
-        this.setPreferredSize(new Dimension(image.getWidth(null), image.getHeight(null) - 350));
+        this.setPreferredSize(new Dimension(image.getWidth(null) - 68, image.getHeight(null) - 444));
         this.setLayout(null);
 
         this.add(toMain);
@@ -338,6 +298,6 @@ public class GameStarterPanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), null);
         g.setColor(ball);
-        g.fillOval(370, 479, 40, 40);
+        g.fillOval(340, 465, 40, 40);
     }
 }

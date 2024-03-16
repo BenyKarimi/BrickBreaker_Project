@@ -11,7 +11,7 @@ public class MainMenuPanel extends JPanel {
     JFrame frame;
     Image image;
 
-    JButton button1, button2, button3;
+    JButton button1, button2, button3, button4;
 
     public MainMenuPanel(JFrame frame) {
         this.frame = frame;
@@ -27,12 +27,12 @@ public class MainMenuPanel extends JPanel {
         JLabel label = new JLabel("Brick");
         label.setFont(new Font("akashi", Font.BOLD, 75));
         label.setForeground(new Color(255, 224, 0));
-        label.setBounds(200, 68, 500, 50);
+        label.setBounds(170, 68, 500, 50);
 
         JLabel label1 = new JLabel("Breaker");
         label1.setFont(new Font("akashi", Font.BOLD, 75));
         label1.setForeground(new Color(255, 224, 0));
-        label1.setBounds(300, 136, 500, 50);
+        label1.setBounds(270, 136, 500, 50);
 
         button1 = new JButton("Start new Game");
         button1.setContentAreaFilled(false);
@@ -41,7 +41,7 @@ public class MainMenuPanel extends JPanel {
         button1.setFocusable(false);
         button1.setFont(new Font("akashi", Font.BOLD, 35));
         button1.setForeground(new Color(255, 224, 0));
-        button1.setBounds(145, 400, 500, 50);
+        button1.setBounds(115, 350, 500, 50);
         button1.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -79,7 +79,7 @@ public class MainMenuPanel extends JPanel {
         button2.setFocusable(false);
         button2.setFont(new Font("akashi", Font.BOLD, 35));
         button2.setForeground(new Color(255, 224, 0));
-        button2.setBounds(145, 500, 500, 50);
+        button2.setBounds(115, 450, 500, 50);
         button2.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -117,7 +117,7 @@ public class MainMenuPanel extends JPanel {
         button3.setFocusable(false);
         button3.setFont(new Font("akashi", Font.BOLD, 35));
         button3.setForeground(new Color(255, 224, 0));
-        button3.setBounds(145, 600, 500, 50);
+        button3.setBounds(115, 550, 500, 50);
         button3.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -148,14 +148,49 @@ public class MainMenuPanel extends JPanel {
             }
         });
 
+        button4 = new JButton("Exit");
+        button4.setContentAreaFilled(false);
+        button4.setOpaque(false);
+        button4.setBorderPainted(false);
+        button4.setFocusable(false);
+        button4.setFont(new Font("akashi", Font.BOLD, 35));
+        button4.setForeground(new Color(255, 224, 0));
+        button4.setBounds(115, 650, 500, 50);
+        button4.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.exit(0);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button4.setFont(new Font(button4.getFont().getFontName(), Font.BOLD, 40));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button4.setFont(new Font(button4.getFont().getFontName(), Font.BOLD, 35));
+            }
+        });
+
         // edit Record number after Game Finished
         JLabel label2 = new JLabel("Record: " + 75);
         label2.setFont(new Font("akashi", Font.BOLD, 40));
         label2.setForeground(new Color(255, 224, 0));
-        label2.setBounds(280, 920, 500, 50);
+        label2.setBounds(250, 845, 500, 50);
 
         image = new ImageIcon("Imported things/BackGround.png").getImage();
-        this.setPreferredSize(new Dimension(image.getWidth(null), image.getHeight(null) - 350));
+        this.setPreferredSize(new Dimension(image.getWidth(null) - 68, image.getHeight(null) - 444));
         this.setLayout(null);
 
         this.add(label);
@@ -163,6 +198,7 @@ public class MainMenuPanel extends JPanel {
         this.add(button1);
         this.add(button2);
         this.add(button3);
+        this.add(button4);
         this.add(label2);
 
         this.addMouseMotionListener(new MouseMotionAdapter() {
