@@ -10,6 +10,7 @@ public class RegularItem {
     private final int height;
     private ItemType itemType;
     private Color color;
+    private boolean visible;
     public RegularItem(int x, int y, ItemType itemType, Color color) {
         this.x = x;
         this.y = y;
@@ -17,6 +18,7 @@ public class RegularItem {
         height = 25;
         this.itemType = itemType;
         this.color = color;
+        visible = true;
     }
 
     @Override
@@ -25,6 +27,13 @@ public class RegularItem {
         if (o == null || getClass() != o.getClass()) return false;
         RegularItem item = (RegularItem) o;
         return x == item.x && y == item.y && width == item.width && height == item.height && itemType == item.itemType && Objects.equals(color, item.color);
+    }
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
     public Color getColor() {
         return color;

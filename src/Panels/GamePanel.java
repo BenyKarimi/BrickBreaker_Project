@@ -6,7 +6,9 @@ import Model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
     Image image;
@@ -16,7 +18,7 @@ public class GamePanel extends JPanel implements ActionListener {
     ArrayList<Ball> ballArrayList;
     final int panelWidth = 700;
     final int panelHeight = 900;
-    final int brickHeight = 52;
+    final int brickHeight = 54;
     final int brickWidth = 98;
     int ballXPosition;
     int ballNumbers;
@@ -30,22 +32,15 @@ public class GamePanel extends JPanel implements ActionListener {
     JButton pauseButton;
     int score;
     PanelTimer panelTimer;
-//    Timer jon;
-//    int cnt;
     int nowNum = 1, ballsDone = 0, ballToAdd = 1;
     boolean firstBall = true;
     int powerStartTime, speedStartTime, dizzinessCounter;
     boolean powerStart = false, speedStart = false;
+    Timer dancingLight, earthquake;
+    boolean healthCome = false, healthSelect = false;
+    int earthquake_num = 0, dancingLight_num = 0;
     public GamePanel(JFrame frame, Level level, Color ballColor) {
-//        jon = new Timer(500, new ActionListener() {
-//            public static int num = 0;
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                System.out.println("jon");
-//                num++;
-//                if (num == 2) jon.stop();
-//            }
-//        });
+
         this.frame = frame;
         this.level = level;
         this.ballColor = ballColor;
@@ -64,12 +59,66 @@ public class GamePanel extends JPanel implements ActionListener {
 
         BricksAndItemsInitial();
 
-        interval = new Timer(500, new ActionListener() {
+        interval = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!aimTime) {
                     if (nowNum < ballNumbers) nowNum++;
                 }
+            }
+        });
+        earthquake = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Brick brick : brickArrayList) {
+                    brick.setWidth(GameRandomHelper.RandomWidthOrHeight(brick.getWidth() * 85 / 100, brickWidth));
+                    brick.setHeight(GameRandomHelper.RandomWidthOrHeight(brick.getHeight() * 85 / 100, brickHeight));
+                }
+                earthquake_num++;
+                if (earthquake_num == 10) {
+                    earthquake.stop();
+                    for (Brick brick : brickArrayList) {
+                        brick.setWidth(brickWidth);
+                        brick.setHeight(brickHeight);
+                    }
+                    earthquake_num = 0;
+                }
+                repaint();
+            }
+        });
+        dancingLight = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Brick brick : brickArrayList) {
+                    if (brick.getBrickType().equals(BrickType.PLAIN)) {
+                        brick.setColor(new Color(GameRandomHelper.RandomColor(), GameRandomHelper.RandomColor(), GameRandomHelper.RandomColor()));
+                        if (GameRandomHelper.RandomVisible() == 5) brick.setVisible(false);
+                    }
+                }
+                for (RegularItem item : regularItems) {
+                    if (item.getItemType().equals(ItemType.ADD_BALL)) {
+                        item.setColor(new Color(GameRandomHelper.RandomColor(), GameRandomHelper.RandomColor(), GameRandomHelper.RandomColor()));
+                        if (GameRandomHelper.RandomVisible() == 8) item.setVisible(false);
+                    }
+                }
+                dancingLight_num++;
+                if (dancingLight_num == 10) {
+                    dancingLight.stop();
+                    for (Brick brick : brickArrayList) {
+                        if (brick.getBrickType().equals(BrickType.PLAIN)) {
+                            brick.setColor(new Color(255, 224, 0));
+                            brick.setVisible(true);
+                        }
+                    }
+                    for (RegularItem item : regularItems) {
+                        if (item.getItemType().equals(ItemType.ADD_BALL)) {
+                            item.setColor(new Color(0, 50, 255));
+                            item.setVisible(true);
+                        }
+                    }
+                    dancingLight_num = 0;
+                }
+                repaint();
             }
         });
         timer = new Timer(500, this);
@@ -151,6 +200,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 brickY = Math.min(brickY, item.getY() - (brickHeight / 2));
             }
             brickY -= 55;
+            if (brickY < 40) return;
         }
 
         for (int i = 0; i < bricksPosition.size(); i++) {
@@ -168,7 +218,9 @@ public class GamePanel extends JPanel implements ActionListener {
                 regularItems.add(new RegularItem((itemsPosition.get(i) * 100) + (brickWidth / 2) - 12, brickY + (brickHeight / 2) - 12, ItemType.ADD_BALL, new Color(0, 50, 255)));
             }
             else {
-                regularItems.add(new RegularItem((itemsPosition.get(i) * 100) + (brickWidth / 2) - 12, brickY + (brickHeight / 2) - 12, GameRandomHelper.ItemRandomType(), new Color(0, 50, 255)));
+                ItemType type = GameRandomHelper.ItemRandomType(healthCome);
+                if (type.equals(ItemType.HEALTH)) healthCome = true;
+                regularItems.add(new RegularItem((itemsPosition.get(i) * 100) + (brickWidth / 2) - 12, brickY + (brickHeight / 2) - 12, type, new Color(0, 50, 255)));
             }
         }
     }
@@ -200,7 +252,6 @@ public class GamePanel extends JPanel implements ActionListener {
         g.drawString(panelTimer.toString(), 625, 40);
         g.drawString("Score: " + Integer.valueOf(score).toString(), 300, 40);
     }
-
     public void drawBalls(Graphics2D g) {
         if (aimTime) {
             g.setColor(ballColor);
@@ -219,24 +270,41 @@ public class GamePanel extends JPanel implements ActionListener {
     public void drawBricksAndItems(Graphics2D g) {
         // change printing with bricks or items type
         for (Brick ptr : brickArrayList) {
-            g.setColor(ptr.getColor());
-            g.fillRect(ptr.getxBegin(), ptr.getyBegin(), ptr.getWidth(), ptr.getHeight());
-            g.setColor(new Color(0, 0, 0));
-            g.setFont(new Font("akashi", Font.PLAIN, 15));
-            g.drawString(Integer.valueOf(ptr.getValue()).toString(), ptr.getxBegin() + (ptr.getWidth() / 2) - 5, ptr.getyBegin() + (ptr.getHeight() / 2) + 4);
+            if (ptr.isVisible()) {
+                g.setColor(ptr.getColor());
+                g.fillRect(ptr.getxBegin(), ptr.getyBegin(), ptr.getWidth(), ptr.getHeight());
+                g.setColor(new Color(0, 0, 0));
+                g.setFont(new Font("akashi", Font.PLAIN, 15));
+                g.drawString(Integer.valueOf(ptr.getValue()).toString(), ptr.getxBegin() + (ptr.getWidth() / 2) - 5, ptr.getyBegin() + (ptr.getHeight() / 2) + 4);
+            }
         }
         for (RegularItem ptr : regularItems) {
-            g.setColor(ptr.getColor());
-            g.fillOval(ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight());
+            if (ptr.isVisible()) {
+                g.setColor(ptr.getColor());
+                g.fillOval(ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight());
+            }
         }
         // finishing game if states
-        for (Brick ptr : brickArrayList) {
-            if (ptr.getyBegin() + ptr.getHeight() >= panelHeight) {
-                frame.setContentPane(new FinishingPanel(frame));
-                frame.pack();
-                frame.revalidate();
-                frame.repaint();
+        if (!healthSelect) {
+            for (Brick ptr : brickArrayList) {
+                if (ptr.getyBegin() + ptr.getHeight() >= panelHeight) {
+                    frame.setContentPane(new FinishingPanel(frame));
+                    frame.pack();
+                    frame.revalidate();
+                    frame.repaint();
+                }
             }
+        }
+        else {
+            int brick_ptr = 0;
+            while (brick_ptr < brickArrayList.size()) {
+                Brick brick = brickArrayList.get(brick_ptr);
+                if (brick.getyBegin() + brick.getHeight() >= panelHeight) {
+                    brickArrayList.remove(brick);
+                }
+                else brick_ptr++;
+            }
+            healthSelect = false;
         }
         // removing items out of bound
         int reg_ptr = 0;
@@ -249,7 +317,28 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
     public void SetVelocities(int dx, int dy) {
-        int xVel = 1, yVel = -1;
+        double a = Math.sqrt((dx * dx) + (dy * dy)) / 2.0;
+        double xVel = dx / a, yVel = dy / a;
+        double tmp = dy / a;
+        while(yVel > -1) {
+            yVel *= 2;
+            xVel *= 2;
+        }
+
+        while(Math.abs(xVel) < 1) {
+            yVel *= 2;
+            xVel *= 2;
+        }
+
+        while(yVel * yVel + xVel * xVel < 34) {
+            yVel *= 2;
+            xVel *= 2;
+        }
+
+        while(yVel * yVel + xVel * xVel > 68) {
+            xVel /= 2;
+            yVel /= 2;
+        }
 //        if (Math.abs(dx) > Math.abs(dy)) {
 //            yVel = -1;
 //            xVel = Math.abs(dx / dy);
@@ -260,12 +349,15 @@ public class GamePanel extends JPanel implements ActionListener {
 //            else xVel = 1;
 //            yVel = -1 * Math.abs(dy / dx);
 //        }
-//
+//        System.out.println("a: " + a);
 //        System.out.println(xVel + " " + yVel);
 
+//        xVel = (xVel < 0 ? Math.floor(xVel) : Math.ceil(xVel));
+        xVel = Math.round(xVel);
+        yVel = Math.floor(yVel);
         for (Ball ptr : ballArrayList) {
-            ptr.setxVelocity(xVel);
-            ptr.setyVelocity(yVel);
+            ptr.setxVelocity((int)xVel);
+            ptr.setyVelocity((int)yVel);
         }
     }
     public void InitiateNextLine() {
@@ -293,6 +385,20 @@ public class GamePanel extends JPanel implements ActionListener {
         repaint();
         timer.start();
     }
+    public void DoBrickUp() {
+        int brick_ptr = 0;
+        while (brick_ptr < brickArrayList.size()) {
+            Brick brick = brickArrayList.get(brick_ptr);
+            if (brick.getyBegin() - (2 * brickHeight) < 55) {
+                brickArrayList.remove(brick);
+            }
+            else {
+                brick_ptr++;
+                brick.setyBegin(brick.getyBegin() - (2 * brickHeight));
+            }
+        }
+        repaint();
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (aimTime) {
@@ -306,14 +412,13 @@ public class GamePanel extends JPanel implements ActionListener {
             this.addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
-                    if (dizzinessCounter == 0) {
-                        mouseXPos = e.getX();
-                        mouseYPos = e.getY();
-                    }
-                    else {
+                    if (dizzinessCounter > 0) {
                         mouseXPos = GameRandomHelper.RandomMouseX();
                         mouseYPos = GameRandomHelper.RandomMouseY();
-                        dizzinessCounter--;
+                    }
+                    else {
+                        mouseXPos = e.getX();
+                        mouseYPos = e.getY();
                     }
                     repaint();
                 }
@@ -321,10 +426,16 @@ public class GamePanel extends JPanel implements ActionListener {
             this.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    aimTime = false;
-                    SetVelocities(mouseXPos - ballXPosition, mouseYPos - 875);
-                    timer.setDelay(10);
-                    repaint();
+                    if (aimTime) {
+                        aimTime = false;
+                        if (dizzinessCounter > 0) {
+                            dizzinessCounter--;
+                            SetVelocities(GameRandomHelper.RandomMouseY() - ballXPosition, GameRandomHelper.RandomMouseY() - 875);
+                        }
+                        else SetVelocities(mouseXPos - ballXPosition, mouseYPos - 875);
+                        timer.setDelay(10);
+                        repaint();
+                    }
                 }
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -344,12 +455,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
             });
         }
-        else {
-//            cnt++;
-//            System.out.println("salam");
-//            if (cnt == 2) {
-//                jon.start();
-//            }
+        else  {
             if (speedStart && panelTimer.getSeconds() + 15 == speedStartTime) {
                 speedStart = false;
                 timer.setDelay(10);
@@ -360,7 +466,7 @@ public class GamePanel extends JPanel implements ActionListener {
             for (int i = 0; i < nowNum; i++) {
                 Ball now = ballArrayList.get(i);
                 if (!now.isCanMove()) continue;
-                Rectangle ballRect = new Rectangle(now.getX(), now.getY(), now.getWidth(), now.getHeight());
+                Rectangle ballRect = new Rectangle(now.getX() + now.getxVelocity(), now.getY() + now.getyVelocity(), now.getWidth(), now.getHeight());
 
                 int brick_ptr = 0;
                 while (brick_ptr < brickArrayList.size()) {
@@ -368,18 +474,39 @@ public class GamePanel extends JPanel implements ActionListener {
                     Rectangle brickRect = new Rectangle(brick.getxBegin(), brick.getyBegin(), brick.getWidth(), brick.getHeight());
 
                     if (ballRect.intersects(brickRect)) {
-                        if (ballRect.x + ballRect.width - 1 <= brickRect.x || ballRect.x + 1 >= brickRect.x + brickRect.width) {
+                        if (ballRect.x + ballRect.width - 5 <= brickRect.x || ballRect.x + 5 >= brickRect.x + brickRect.width) {
+//                            if (ballRect.x + ballRect.width - 1 <= brickRect.x) {
+//                                now.setX(brickRect.x - ballRect.width);
+//                            }
+//                            else {
+//                                now.setX(brickRect.x + brickRect.width);
+//                            }
                             now.setxVelocity(-1 * now.getxVelocity());
-                        } else {
+                        }
+                        else {
+//                            if (ballRect.y + ballRect.height - 1 <= brickRect.y) {
+//
+//                                now.setY(brickRect.y + brickRect.height + 1);
+//                            }
+//                            else {
+//                                now.setY(brickRect.y + brickRect.height + 1);
+//                            }
                             now.setyVelocity(-1 * now.getyVelocity());
                         }
 
                         if (powerStart) brick.setValue(brick.getValue() - 2);
                         else brick.setValue(brick.getValue() - 1);
                         if (brick.getValue() <= 0) {
+                            System.out.println(brick.getBrickType().toString());
                             score += (brick.getFixedValue() - (panelTimer.getSeconds() / 10));
                             brickArrayList.remove(brick);
                             // halat haye mokhtalef
+                            if (brick.getBrickType().equals(BrickType.DANCING_LIGHT)) {
+                                dancingLight.start();
+                            }
+                            else if (brick.getBrickType().equals(BrickType.EARTHQUAKE)) {
+                                earthquake.start();
+                            }
                         }
                         else brick_ptr++;
                     }
@@ -392,6 +519,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     Rectangle itemRect = new Rectangle(item.getX(), item.getY(), item.getWidth(), item.getHeight());
 
                     if (ballRect.intersects(itemRect)) {
+                        System.out.println(item.getItemType().toString());
                         regularItems.remove(item);
                         // halat haye mokhtalef
                         if (item.getItemType().equals(ItemType.ADD_BALL)) ballToAdd++;
@@ -407,15 +535,30 @@ public class GamePanel extends JPanel implements ActionListener {
                         else if (item.getItemType().equals(ItemType.DIZZINESS)) {
                             dizzinessCounter++;
                         }
+                        else if (item.getItemType().equals(ItemType.BRICK_UP)) {
+                            DoBrickUp();
+                        }
+                        else if (item.getItemType().equals(ItemType.HEALTH)) {
+                            healthSelect = true;
+                        }
                     }
                     else reg_ptr++;
                 }
 
                 now.setX(now.getX() + now.getxVelocity());
                 now.setY(now.getY() + now.getyVelocity());
-                if (now.getX() <= 0) now.setxVelocity(-1 * now.getxVelocity());
-                if (now.getY() <= 55) now.setyVelocity(-1 * now.getyVelocity());
-                if (now.getX() >= panelWidth - 25) now.setxVelocity(-1 * now.getxVelocity());
+                if (now.getX() <= 0) {
+                    now.setxVelocity(-1 * now.getxVelocity());
+                    now.setX(0);
+                }
+                if (now.getY() <= 55) {
+                    now.setyVelocity(-1 * now.getyVelocity());
+                    now.setY(55);
+                }
+                if (now.getX() >= panelWidth - 25) {
+                    now.setxVelocity(-1 * now.getxVelocity());
+                    now.setX(panelWidth - 25);
+                }
                 if (now.getY() >= 875) {
                     ballsDone++;
                     if (firstBall) {

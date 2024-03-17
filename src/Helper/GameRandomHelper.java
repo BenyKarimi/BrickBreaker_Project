@@ -99,11 +99,15 @@ public class GameRandomHelper {
         }
         return keep;
     }
-    public static ItemType ItemRandomType() {
-        int num = random.nextInt(0, 3);
+    public static ItemType ItemRandomType(boolean healthCome) {
+        if (!healthCome) {
+            if (random.nextInt(0, 5) == 0) return ItemType.HEALTH;
+        }
+        int num = random.nextInt(0, 4);
         if (num == 0) return ItemType.SPEED_UP;
         if (num == 1) return ItemType.POWER_UP;
-        return ItemType.DIZZINESS;
+        if (num == 2) return ItemType.DIZZINESS;
+        else return ItemType.BRICK_UP;
     }
 
     public static int RandomMouseX() {
@@ -111,5 +115,14 @@ public class GameRandomHelper {
     }
     public static int RandomMouseY() {
         return random.nextInt(55, 871);
+    }
+    public static int RandomColor() {
+        return random.nextInt(50, 201);
+    }
+    public static int RandomVisible() {
+        return random.nextInt(0, 10);
+    }
+    public static int RandomWidthOrHeight(int f, int s) {
+        return random.nextInt(f, s + 1);
     }
 }

@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Brick {
     private int width, height, xBegin, yBegin, value;
     private final int fixedValue;
-
+    private boolean visible;
     private BrickType brickType;
     private Color color;
 
@@ -19,6 +19,7 @@ public class Brick {
         this.brickType = brickType;
         this.color = color;
         fixedValue = value;
+        visible = true;
     }
 
     @Override
@@ -27,6 +28,13 @@ public class Brick {
         if (o == null || getClass() != o.getClass()) return false;
         Brick brick = (Brick) o;
         return width == brick.width && height == brick.height && xBegin == brick.xBegin && yBegin == brick.yBegin;
+    }
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public int getFixedValue() {
