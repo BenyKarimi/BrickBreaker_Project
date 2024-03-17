@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class Brick {
     private int width, height, xBegin, yBegin, value;
+    private final int fixedValue;
+
     private BrickType brickType;
     private Color color;
 
@@ -16,6 +18,7 @@ public class Brick {
         this.value = value;
         this.brickType = brickType;
         this.color = color;
+        fixedValue = value;
     }
 
     @Override
@@ -24,6 +27,10 @@ public class Brick {
         if (o == null || getClass() != o.getClass()) return false;
         Brick brick = (Brick) o;
         return width == brick.width && height == brick.height && xBegin == brick.xBegin && yBegin == brick.yBegin;
+    }
+
+    public int getFixedValue() {
+        return fixedValue;
     }
 
     public Color getColor() {

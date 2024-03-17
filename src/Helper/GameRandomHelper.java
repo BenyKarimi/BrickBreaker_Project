@@ -105,4 +105,11 @@ public class GameRandomHelper {
         if (num == 1) return ItemType.POWER_UP;
         return ItemType.DIZZINESS;
     }
+
+    public static int RandomMouseX() {
+        return random.nextInt(0, 700);
+    }
+    public static int RandomMouseY() {
+        return random.nextInt(55, 871);
+    }
 }

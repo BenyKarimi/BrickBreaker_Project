@@ -7,6 +7,7 @@ public class Ball {
     private final int height;
     private int xVelocity;
     private int yVelocity;
+    private boolean canMove;
     public Ball(int x, int y, int xVelocity, int yVelocity) {
         this.x = x;
         this.y = y;
@@ -14,6 +15,15 @@ public class Ball {
         this.yVelocity = yVelocity;
         width = 25;
         height = 25;
+        canMove = true;
+    }
+
+    public boolean isCanMove() {
+        return canMove;
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
     }
 
     public int getxVelocity() {

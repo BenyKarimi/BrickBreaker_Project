@@ -25,10 +25,27 @@ public class GamePanel extends JPanel implements ActionListener {
     int mouseXPos, mouseYPos;
     Level level;
     Color ballColor;
-    javax.swing.Timer timer;
+    javax.swing.Timer timer, interval;
     boolean aimTime, drawAim;
     JButton pauseButton;
+    int score;
+    PanelTimer panelTimer;
+//    Timer jon;
+//    int cnt;
+    int nowNum = 1, ballsDone = 0, ballToAdd = 1;
+    boolean firstBall = true;
+    int powerStartTime, speedStartTime, dizzinessCounter;
+    boolean powerStart = false, speedStart = false;
     public GamePanel(JFrame frame, Level level, Color ballColor) {
+//        jon = new Timer(500, new ActionListener() {
+//            public static int num = 0;
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                System.out.println("jon");
+//                num++;
+//                if (num == 2) jon.stop();
+//            }
+//        });
         this.frame = frame;
         this.level = level;
         this.ballColor = ballColor;
@@ -47,7 +64,16 @@ public class GamePanel extends JPanel implements ActionListener {
 
         BricksAndItemsInitial();
 
+        interval = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!aimTime) {
+                    if (nowNum < ballNumbers) nowNum++;
+                }
+            }
+        });
         timer = new Timer(500, this);
+        panelTimer = new PanelTimer();
 
         pauseButton = new JButton("Pause");
         pauseButton.setContentAreaFilled(false);
@@ -63,12 +89,14 @@ public class GamePanel extends JPanel implements ActionListener {
                 if (pauseButton.getText().equals("Pause")) {
                     pauseButton.setText("Resume");
                     timer.stop();
+                    panelTimer.Stop();
                     drawAim = false;
                     repaint();
                 }
                 else {
                     pauseButton.setText("Pause");
                     timer.start();
+                    panelTimer.Start();
                     drawAim = true;
                     repaint();
                 }
@@ -96,12 +124,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setLayout(null);
 
         timer.start();
-//        this.addMouseMotionListener(new MouseMotionAdapter() {
-//            @Override
-//            public void mouseMoved(MouseEvent e) {
-//                   System.out.println(e.getX() + " " + e.getY());
-//            }
-//        });
+        interval.start();
     }
 
     public void AddBall(int num) {
@@ -162,7 +185,7 @@ public class GamePanel extends JPanel implements ActionListener {
         drawBricksAndItems((Graphics2D) g);
 
         // draw aim line
-        if (aimTime && SettingPanel.aimOn && drawAim) {
+        if (aimTime && SettingPanel.aimOn && drawAim && mouseYPos > 55 && mouseYPos <= 870 && mouseXPos > 0 && mouseXPos < 699) {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setColor(ballColor);
             float[] dashPattern = {10, 5};
@@ -170,6 +193,12 @@ public class GamePanel extends JPanel implements ActionListener {
             g2d.setStroke(dashed);
             g2d.drawLine(ballXPosition + 12, 890, mouseXPos, mouseYPos);
         }
+
+        // draw timer and score
+        g.setColor(new Color(255, 224, 0));
+        g.setFont(new Font("akashi", Font.BOLD, 17));
+        g.drawString(panelTimer.toString(), 625, 40);
+        g.drawString("Score: " + Integer.valueOf(score).toString(), 300, 40);
     }
 
     public void drawBalls(Graphics2D g) {
@@ -182,6 +211,7 @@ public class GamePanel extends JPanel implements ActionListener {
         else {
             g.setColor(ballColor);
             for (Ball ptr : ballArrayList) {
+//                System.out.println(nowNum + " " + ptr.getX() + " " + ptr.getY());
                 g.fillOval(ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight());
             }
         }
@@ -199,9 +229,69 @@ public class GamePanel extends JPanel implements ActionListener {
             g.setColor(ptr.getColor());
             g.fillOval(ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight());
         }
-
         // finishing game if states
+        for (Brick ptr : brickArrayList) {
+            if (ptr.getyBegin() + ptr.getHeight() >= panelHeight) {
+                frame.setContentPane(new FinishingPanel(frame));
+                frame.pack();
+                frame.revalidate();
+                frame.repaint();
+            }
+        }
+        // removing items out of bound
+        int reg_ptr = 0;
+        while (reg_ptr < regularItems.size()) {
+            RegularItem item = regularItems.get(reg_ptr);
+            if (item.getY() + item.getHeight() >= panelHeight) {
+                regularItems.remove(item);
+            }
+            else reg_ptr++;
+        }
+    }
+    public void SetVelocities(int dx, int dy) {
+        int xVel = 1, yVel = -1;
+//        if (Math.abs(dx) > Math.abs(dy)) {
+//            yVel = -1;
+//            xVel = Math.abs(dx / dy);
+//            if (dx < 0) xVel = -1 * xVel;
+//        }
+//        else {
+//            if (dx < 0) xVel = -1;
+//            else xVel = 1;
+//            yVel = -1 * Math.abs(dy / dx);
+//        }
+//
+//        System.out.println(xVel + " " + yVel);
 
+        for (Ball ptr : ballArrayList) {
+            ptr.setxVelocity(xVel);
+            ptr.setyVelocity(yVel);
+        }
+    }
+    public void InitiateNextLine() {
+        for (Brick brick : brickArrayList) {
+            brick.setyBegin(brick.getyBegin() + 55);
+        }
+        for (RegularItem item : regularItems) {
+            item.setY(item.getY() + 55);
+        }
+        BricksAndItemsInitial();
+
+        AddBall(ballToAdd);
+        for (Ball ball : ballArrayList) {
+            ball.setCanMove(true);
+            ball.setX(ballXPosition);
+        }
+
+        nowNum = 1;
+        ballsDone = 0;
+        firstBall = true;
+        ballToAdd = 1;
+
+        aimTime = true;
+        timer.setDelay(500);
+        repaint();
+        timer.start();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -216,8 +306,15 @@ public class GamePanel extends JPanel implements ActionListener {
             this.addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
-                    mouseXPos = e.getX();
-                    mouseYPos = e.getY();
+                    if (dizzinessCounter == 0) {
+                        mouseXPos = e.getX();
+                        mouseYPos = e.getY();
+                    }
+                    else {
+                        mouseXPos = GameRandomHelper.RandomMouseX();
+                        mouseYPos = GameRandomHelper.RandomMouseY();
+                        dizzinessCounter--;
+                    }
                     repaint();
                 }
             });
@@ -225,7 +322,8 @@ public class GamePanel extends JPanel implements ActionListener {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     aimTime = false;
-                    timer.setDelay(100);
+                    SetVelocities(mouseXPos - ballXPosition, mouseYPos - 875);
+                    timer.setDelay(10);
                     repaint();
                 }
                 @Override
@@ -247,7 +345,93 @@ public class GamePanel extends JPanel implements ActionListener {
             });
         }
         else {
-            System.out.println("salam");
+//            cnt++;
+//            System.out.println("salam");
+//            if (cnt == 2) {
+//                jon.start();
+//            }
+            if (speedStart && panelTimer.getSeconds() + 15 == speedStartTime) {
+                speedStart = false;
+                timer.setDelay(10);
+            }
+            if (powerStart && panelTimer.getSeconds() + 15 == powerStartTime) {
+                powerStart = false;
+            }
+            for (int i = 0; i < nowNum; i++) {
+                Ball now = ballArrayList.get(i);
+                if (!now.isCanMove()) continue;
+                Rectangle ballRect = new Rectangle(now.getX(), now.getY(), now.getWidth(), now.getHeight());
+
+                int brick_ptr = 0;
+                while (brick_ptr < brickArrayList.size()) {
+                    Brick brick = brickArrayList.get(brick_ptr);
+                    Rectangle brickRect = new Rectangle(brick.getxBegin(), brick.getyBegin(), brick.getWidth(), brick.getHeight());
+
+                    if (ballRect.intersects(brickRect)) {
+                        if (ballRect.x + ballRect.width - 1 <= brickRect.x || ballRect.x + 1 >= brickRect.x + brickRect.width) {
+                            now.setxVelocity(-1 * now.getxVelocity());
+                        } else {
+                            now.setyVelocity(-1 * now.getyVelocity());
+                        }
+
+                        if (powerStart) brick.setValue(brick.getValue() - 2);
+                        else brick.setValue(brick.getValue() - 1);
+                        if (brick.getValue() <= 0) {
+                            score += (brick.getFixedValue() - (panelTimer.getSeconds() / 10));
+                            brickArrayList.remove(brick);
+                            // halat haye mokhtalef
+                        }
+                        else brick_ptr++;
+                    }
+                    else brick_ptr++;
+                }
+
+                int reg_ptr = 0;
+                while (reg_ptr < regularItems.size()) {
+                    RegularItem item = regularItems.get(reg_ptr);
+                    Rectangle itemRect = new Rectangle(item.getX(), item.getY(), item.getWidth(), item.getHeight());
+
+                    if (ballRect.intersects(itemRect)) {
+                        regularItems.remove(item);
+                        // halat haye mokhtalef
+                        if (item.getItemType().equals(ItemType.ADD_BALL)) ballToAdd++;
+                        else if (item.getItemType().equals(ItemType.SPEED_UP)) {
+                            speedStart = true;
+                            speedStartTime = panelTimer.getSeconds();
+                            timer.setDelay(5);
+                        }
+                        else if (item.getItemType().equals(ItemType.POWER_UP)) {
+                            powerStart = true;
+                            powerStartTime = panelTimer.getSeconds();
+                        }
+                        else if (item.getItemType().equals(ItemType.DIZZINESS)) {
+                            dizzinessCounter++;
+                        }
+                    }
+                    else reg_ptr++;
+                }
+
+                now.setX(now.getX() + now.getxVelocity());
+                now.setY(now.getY() + now.getyVelocity());
+                if (now.getX() <= 0) now.setxVelocity(-1 * now.getxVelocity());
+                if (now.getY() <= 55) now.setyVelocity(-1 * now.getyVelocity());
+                if (now.getX() >= panelWidth - 25) now.setxVelocity(-1 * now.getxVelocity());
+                if (now.getY() >= 875) {
+                    ballsDone++;
+                    if (firstBall) {
+                        ballXPosition = now.getX();
+                        firstBall = false;
+                    }
+                    now.setY(875);
+                    now.setCanMove(false);
+                }
+                repaint();
+            }
+
+            if (ballsDone == ballNumbers) {
+                timer.stop();
+                InitiateNextLine();
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 package Model;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class RegularItem {
     private int x;
@@ -15,9 +16,16 @@ public class RegularItem {
         width = 25;
         height = 25;
         this.itemType = itemType;
-        this.color =color;
+        this.color = color;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RegularItem item = (RegularItem) o;
+        return x == item.x && y == item.y && width == item.width && height == item.height && itemType == item.itemType && Objects.equals(color, item.color);
+    }
     public Color getColor() {
         return color;
     }
