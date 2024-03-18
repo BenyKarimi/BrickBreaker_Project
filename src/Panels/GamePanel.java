@@ -1,5 +1,6 @@
 package Panels;
 
+import GameApplication.BrickBreakerGame;
 import Helper.GameRandomHelper;
 import Model.*;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -39,12 +41,15 @@ public class GamePanel extends JPanel implements ActionListener {
     Timer dancingLight, earthquake;
     boolean healthCome = false, healthSelect = false;
     int earthquake_num = 0, dancingLight_num = 0;
-    public GamePanel(JFrame frame, Level level, Color ballColor) {
-
+    LocalDate date;
+    String username;
+    public GamePanel(JFrame frame, Level level, Color ballColor, String username) {
         this.frame = frame;
         this.level = level;
         this.ballColor = ballColor;
+        this.username = username;
 
+        date = LocalDate.now();
         brickArrayList = new ArrayList<>();
         regularItems = new ArrayList<>();
         ballArrayList = new ArrayList<>();
@@ -59,7 +64,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         BricksAndItemsInitial();
 
-        interval = new Timer(100, new ActionListener() {
+        interval = new Timer(200, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!aimTime) {
@@ -139,10 +144,12 @@ public class GamePanel extends JPanel implements ActionListener {
                     pauseButton.setText("Resume");
                     timer.stop();
                     panelTimer.Stop();
+                    BrickBreakerGame.soundManager.stop();
                     drawAim = false;
                     repaint();
                 }
                 else {
+                    if (SettingPanel.songOn) BrickBreakerGame.soundManager.play();
                     pauseButton.setText("Pause");
                     timer.start();
                     panelTimer.Start();
@@ -288,7 +295,7 @@ public class GamePanel extends JPanel implements ActionListener {
         if (!healthSelect) {
             for (Brick ptr : brickArrayList) {
                 if (ptr.getyBegin() + ptr.getHeight() >= panelHeight) {
-                    frame.setContentPane(new FinishingPanel(frame));
+                    frame.setContentPane(new FinishingPanel(frame, date, username, panelTimer.getSeconds(), score, level, ballColor));
                     frame.pack();
                     frame.revalidate();
                     frame.repaint();
@@ -397,6 +404,17 @@ public class GamePanel extends JPanel implements ActionListener {
                 brick.setyBegin(brick.getyBegin() - (2 * brickHeight));
             }
         }
+        int item_ptr = 0;
+        while (item_ptr < regularItems.size()) {
+            RegularItem item = regularItems.get(item_ptr);
+            if (item.getY() - (2 * brickHeight) < 55) {
+                regularItems.remove(item);
+            }
+            else {
+                item_ptr++;
+                item.setY(item.getY() - (2 * brickHeight));
+            }
+        }
         repaint();
     }
     @Override
@@ -433,7 +451,8 @@ public class GamePanel extends JPanel implements ActionListener {
                             SetVelocities(GameRandomHelper.RandomMouseY() - ballXPosition, GameRandomHelper.RandomMouseY() - 875);
                         }
                         else SetVelocities(mouseXPos - ballXPosition, mouseYPos - 875);
-                        timer.setDelay(10);
+                        timer.setDelay(20);
+                        interval.setDelay(200);
                         repaint();
                     }
                 }
@@ -458,7 +477,8 @@ public class GamePanel extends JPanel implements ActionListener {
         else  {
             if (speedStart && panelTimer.getSeconds() + 15 == speedStartTime) {
                 speedStart = false;
-                timer.setDelay(10);
+                timer.setDelay(20);
+                interval.setDelay(200);
             }
             if (powerStart && panelTimer.getSeconds() + 15 == powerStartTime) {
                 powerStart = false;
@@ -475,22 +495,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
                     if (ballRect.intersects(brickRect)) {
                         if (ballRect.x + ballRect.width - 5 <= brickRect.x || ballRect.x + 5 >= brickRect.x + brickRect.width) {
-//                            if (ballRect.x + ballRect.width - 1 <= brickRect.x) {
-//                                now.setX(brickRect.x - ballRect.width);
-//                            }
-//                            else {
-//                                now.setX(brickRect.x + brickRect.width);
-//                            }
                             now.setxVelocity(-1 * now.getxVelocity());
                         }
                         else {
-//                            if (ballRect.y + ballRect.height - 1 <= brickRect.y) {
-//
-//                                now.setY(brickRect.y + brickRect.height + 1);
-//                            }
-//                            else {
-//                                now.setY(brickRect.y + brickRect.height + 1);
-//                            }
                             now.setyVelocity(-1 * now.getyVelocity());
                         }
 
@@ -508,7 +515,8 @@ public class GamePanel extends JPanel implements ActionListener {
                                 earthquake.start();
                             }
                         }
-                        else brick_ptr++;
+//                        else brick_ptr++;
+                        break;
                     }
                     else brick_ptr++;
                 }
@@ -526,7 +534,8 @@ public class GamePanel extends JPanel implements ActionListener {
                         else if (item.getItemType().equals(ItemType.SPEED_UP)) {
                             speedStart = true;
                             speedStartTime = panelTimer.getSeconds();
-                            timer.setDelay(5);
+                            timer.setDelay(10);
+                            interval.setDelay(100);
                         }
                         else if (item.getItemType().equals(ItemType.POWER_UP)) {
                             powerStart = true;

@@ -1,3 +1,5 @@
+package GameApplication;
+
 import Panels.MainMenuPanel;
 
 import javax.swing.*;

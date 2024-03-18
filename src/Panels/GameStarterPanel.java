@@ -249,7 +249,7 @@ public class GameStarterPanel extends JPanel {
 
                 }
                 else {
-                    frame.setContentPane(new GamePanel(frame, level, ball));
+                    frame.setContentPane(new GamePanel(frame, level, ball, name));
                     frame.pack();
                     frame.revalidate();
                     frame.repaint();

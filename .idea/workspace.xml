@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b5799d8-8841-46ed-b882-6a9b7ced8e60" name="Changes" comment="Adding Panel Timer class for game and score&#10;Finishing game logic after aiming&#10;Adding regular items functions">
+    <list default="true" id="9b5799d8-8841-46ed-b882-6a9b7ced8e60" name="Changes" comment="Finish game logic after aiming &#10;Adding all items functions">
+      <change afterPath="$PROJECT_DIR$/Imported things/background_sound.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/FileManagment/FileManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SoundManagment/SoundManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Helper/GameRandomHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Helper/GameRandomHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Brick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Brick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ItemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ItemType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/RegularItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/RegularItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BrickBreakerGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameApplication/BrickBreakerGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameApplication/GameFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Panels/FinishingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/FinishingPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Panels/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Panels/GameStarterPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/GameStarterPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Panels/MainMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/MainMenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Panels/SettingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/SettingPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +45,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/benya/Desktop/tmp",
+    "last_opened_file_path": "C:/Users/benya/Desktop/GUI_Brokode",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
@@ -54,7 +59,7 @@
   </component>
   <component name="RunManager">
     <configuration name="BrickBreakerGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="BrickBreakerGame" />
+      <option name="MAIN_CLASS_NAME" value="GameApplication.BrickBreakerGame" />
       <module name="BrickBreaker_Project" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -82,7 +87,8 @@
       <workItem from="1710572772135" duration="25147000" />
       <workItem from="1710617677904" duration="1241000" />
       <workItem from="1710658611100" duration="13612000" />
-      <workItem from="1710685118534" duration="24161000" />
+      <workItem from="1710685118534" duration="24301000" />
+      <workItem from="1710734786539" duration="12298000" />
     </task>
     <task id="LOCAL-00001" summary="Finish Main menu panel">
       <created>1710501364347</created>
@@ -112,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710676695831</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Finish game logic after aiming &#10;Adding all items functions">
+      <created>1710711320829</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710711320829</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,7 +147,8 @@
     <MESSAGE value="Finish Game Starter panel" />
     <MESSAGE value="Adding models and Helpers for game&#10;Finish aiming part of game panel" />
     <MESSAGE value="Adding Panel Timer class for game and score&#10;Finishing game logic after aiming&#10;Adding regular items functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding Panel Timer class for game and score&#10;Finishing game logic after aiming&#10;Adding regular items functions" />
+    <MESSAGE value="Finish game logic after aiming &#10;Adding all items functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish game logic after aiming &#10;Adding all items functions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
