@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b5799d8-8841-46ed-b882-6a9b7ced8e60" name="Changes" comment="Finish game logic after aiming &#10;Adding all items functions">
-      <change afterPath="$PROJECT_DIR$/Imported things/background_sound.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FileManagment/FileManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SoundManagment/SoundManager.java" afterDir="false" />
+    <list default="true" id="9b5799d8-8841-46ed-b882-6a9b7ced8e60" name="Changes" comment="Finishing Setting panel and Finishing finish panel&#10;Replace interval delay in game and change some logic of game after aim">
+      <change afterPath="$PROJECT_DIR$/src/FileManagment/GameHistory.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/FileManagment/HighestScore.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BrickBreakerGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameApplication/BrickBreakerGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameApplication/GameFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FileManagment/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileManagment/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Panels/FinishingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/FinishingPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Panels/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Panels/GameStarterPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/GameStarterPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Panels/MainMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/MainMenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Panels/SettingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/SettingPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +84,7 @@
       <workItem from="1710617677904" duration="1241000" />
       <workItem from="1710658611100" duration="13612000" />
       <workItem from="1710685118534" duration="24301000" />
-      <workItem from="1710734786539" duration="12298000" />
+      <workItem from="1710734786539" duration="17997000" />
     </task>
     <task id="LOCAL-00001" summary="Finish Main menu panel">
       <created>1710501364347</created>
@@ -125,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710711320829</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Finishing Setting panel and Finishing finish panel&#10;Replace interval delay in game and change some logic of game after aim">
+      <created>1710768821594</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1710768821594</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,7 +151,8 @@
     <MESSAGE value="Adding models and Helpers for game&#10;Finish aiming part of game panel" />
     <MESSAGE value="Adding Panel Timer class for game and score&#10;Finishing game logic after aiming&#10;Adding regular items functions" />
     <MESSAGE value="Finish game logic after aiming &#10;Adding all items functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finish game logic after aiming &#10;Adding all items functions" />
+    <MESSAGE value="Finishing Setting panel and Finishing finish panel&#10;Replace interval delay in game and change some logic of game after aim" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finishing Setting panel and Finishing finish panel&#10;Replace interval delay in game and change some logic of game after aim" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

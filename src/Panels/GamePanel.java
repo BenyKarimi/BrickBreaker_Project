@@ -295,10 +295,11 @@ public class GamePanel extends JPanel implements ActionListener {
         if (!healthSelect) {
             for (Brick ptr : brickArrayList) {
                 if (ptr.getyBegin() + ptr.getHeight() >= panelHeight) {
-                    frame.setContentPane(new FinishingPanel(frame, date, username, panelTimer.getSeconds(), score, level, ballColor));
+                    frame.setContentPane(new FinishingPanel(frame, date, username, panelTimer, score, level, ballColor));
                     frame.pack();
                     frame.revalidate();
                     frame.repaint();
+                    break;
                 }
             }
         }

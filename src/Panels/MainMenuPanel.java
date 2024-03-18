@@ -1,5 +1,7 @@
 package Panels;
 
+import FileManagment.FileManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -184,7 +186,7 @@ public class MainMenuPanel extends JPanel {
         });
 
         // edit Record number after Game Finished
-        JLabel label2 = new JLabel("Record: " + 75);
+        JLabel label2 = new JLabel("Record: " + FileManager.GetMaxScore());
         label2.setFont(new Font("akashi", Font.BOLD, 40));
         label2.setForeground(new Color(255, 224, 0));
         label2.setBounds(250, 845, 500, 50);

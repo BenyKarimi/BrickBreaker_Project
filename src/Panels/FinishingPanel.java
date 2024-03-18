@@ -14,11 +14,12 @@ public class FinishingPanel extends JPanel {
     JFrame frame;
     Image image;
     FileManager fileManager;
-    public FinishingPanel(JFrame frame, LocalDate date, String username, int time, int score, Level level, Color ballColor) {
+    public FinishingPanel(JFrame frame, LocalDate date, String username, PanelTimer timer, int score, Level level, Color ballColor) {
         this.frame = frame;
 
         if (SettingPanel.saveOn) {
-            fileManager = new FileManager(date, username, time, score);
+            fileManager = new FileManager(date, username, timer, score);
+            fileManager.Save();
         }
 
         JLabel label = new JLabel("Game Finished");
