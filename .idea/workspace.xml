@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b5799d8-8841-46ed-b882-6a9b7ced8e60" name="Changes" comment="Finish file saving and load record for main menu panel">
-      <change afterPath="$PROJECT_DIR$/src/Helper/CustomCellRenderer.java" afterDir="false" />
+    <list default="true" id="9b5799d8-8841-46ed-b882-6a9b7ced8e60" name="Changes" comment="Finish load data and loading panel with table and scrollpane&#10;Add custom cell renderer for table in helper package">
+      <change afterPath="$PROJECT_DIR$/Imported things/BRICK_UP.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Imported things/DIZZINESS.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Imported things/Dancing_light.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Imported things/EarthQuake.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Imported things/Health.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Imported things/PowerUp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Imported things/SpeedUp.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FileManagment/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileManagment/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FileManagment/GameHistory.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileManagment/GameHistory.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FileManagment/HighestScore.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileManagment/HighestScore.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Panels/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Panels/MainMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/MainMenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Panels/ShowHistoryPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Panels/ShowHistoryPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +45,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/benya/Desktop/AirHockeyProject",
+    "last_opened_file_path": "C:/Users/benya/Desktop/BrickBreaker_Project/Imported things",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
@@ -84,7 +89,7 @@
       <workItem from="1710658611100" duration="13612000" />
       <workItem from="1710685118534" duration="24301000" />
       <workItem from="1710734786539" duration="18047000" />
-      <workItem from="1710840147137" duration="7308000" />
+      <workItem from="1710840147137" duration="15218000" />
     </task>
     <task id="LOCAL-00001" summary="Finish Main menu panel">
       <created>1710501364347</created>
@@ -135,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710775754718</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Finish load data and loading panel with table and scrollpane&#10;Add custom cell renderer for table in helper package">
+      <created>1710847622815</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1710847622815</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,7 +172,8 @@
     <MESSAGE value="Finish game logic after aiming &#10;Adding all items functions" />
     <MESSAGE value="Finishing Setting panel and Finishing finish panel&#10;Replace interval delay in game and change some logic of game after aim" />
     <MESSAGE value="Finish file saving and load record for main menu panel" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finish file saving and load record for main menu panel" />
+    <MESSAGE value="Finish load data and loading panel with table and scrollpane&#10;Add custom cell renderer for table in helper package" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish load data and loading panel with table and scrollpane&#10;Add custom cell renderer for table in helper package" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

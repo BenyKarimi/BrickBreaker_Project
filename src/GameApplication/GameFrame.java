@@ -8,7 +8,7 @@ public class GameFrame extends JFrame {
     public GameFrame () {
         MainMenuPanel menuPanel = new MainMenuPanel(this);
 
-        ImageIcon image = new ImageIcon("Imported things/logo.jpg");
+        ImageIcon image = new ImageIcon("Imported things/logo.png");
 
         this.setIconImage(image.getImage());
         this.setTitle("Brick Breaker+");

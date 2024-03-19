@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements ActionListener {
     ArrayList<Ball> ballArrayList;
     final int panelWidth = 700;
     final int panelHeight = 900;
-    final int brickHeight = 54;
+    final int brickHeight = 52;
     final int brickWidth = 98;
     int ballXPosition;
     int ballNumbers;
@@ -204,10 +204,10 @@ public class GamePanel extends JPanel implements ActionListener {
                 brickY = Math.min(brickY, brick.getyBegin());
             }
             for (RegularItem item : regularItems) {
-                brickY = Math.min(brickY, item.getY() - (brickHeight / 2));
+                brickY = Math.min(brickY, item.getY() - (brickHeight / 2) + 12);
             }
             brickY -= 55;
-            if (brickY < 40) return;
+//            if (brickY < 40) return;
         }
 
         for (int i = 0; i < bricksPosition.size(); i++) {
@@ -278,17 +278,49 @@ public class GamePanel extends JPanel implements ActionListener {
         // change printing with bricks or items type
         for (Brick ptr : brickArrayList) {
             if (ptr.isVisible()) {
-                g.setColor(ptr.getColor());
-                g.fillRect(ptr.getxBegin(), ptr.getyBegin(), ptr.getWidth(), ptr.getHeight());
+                if (ptr.getBrickType().equals(BrickType.PLAIN)) {
+                    g.setColor(ptr.getColor());
+                    g.fillRect(ptr.getxBegin(), ptr.getyBegin(), ptr.getWidth(), ptr.getHeight());
+                }
+                else if (ptr.getBrickType().equals(BrickType.EARTHQUAKE)) {
+                    Image image1 = new ImageIcon("Imported things/EarthQuake.png").getImage();
+                    g.drawImage(image1, ptr.getxBegin(), ptr.getyBegin(), ptr.getWidth(), ptr.getHeight(), null);
+                }
+                else if (ptr.getBrickType().equals(BrickType.DANCING_LIGHT)) {
+                    Image image1 = new ImageIcon("Imported things/Dancing_light.jpg").getImage();
+                    g.drawImage(image1, ptr.getxBegin(), ptr.getyBegin(), ptr.getWidth(), ptr.getHeight(), null);
+                }
                 g.setColor(new Color(0, 0, 0));
-                g.setFont(new Font("akashi", Font.PLAIN, 15));
+                g.setFont(new Font("akashi", Font.BOLD, 15));
                 g.drawString(Integer.valueOf(ptr.getValue()).toString(), ptr.getxBegin() + (ptr.getWidth() / 2) - 5, ptr.getyBegin() + (ptr.getHeight() / 2) + 4);
             }
         }
         for (RegularItem ptr : regularItems) {
             if (ptr.isVisible()) {
-                g.setColor(ptr.getColor());
-                g.fillOval(ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight());
+                if (ptr.getItemType().equals(ItemType.ADD_BALL)) {
+                    g.setColor(ptr.getColor());
+                    g.fillOval(ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight());
+                }
+                else if (ptr.getItemType().equals(ItemType.HEALTH)) {
+                    Image image1 = new ImageIcon("Imported things/Health.gif").getImage();
+                    g.drawImage(image1, ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight(), null);
+                }
+                else if (ptr.getItemType().equals(ItemType.BRICK_UP)) {
+                    Image image1 = new ImageIcon("Imported things/BRICK_UP.png").getImage();
+                    g.drawImage(image1, ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight(), null);
+                }
+                else if (ptr.getItemType().equals(ItemType.DIZZINESS)) {
+                    Image image1 = new ImageIcon("Imported things/DIZZINESS.gif").getImage();
+                    g.drawImage(image1, ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight(), null);
+                }
+                else if (ptr.getItemType().equals(ItemType.POWER_UP)) {
+                    Image image1 = new ImageIcon("Imported things/PowerUp.png").getImage();
+                    g.drawImage(image1, ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight(), null);
+                }
+                else if (ptr.getItemType().equals(ItemType.SPEED_UP)) {
+                    Image image1 = new ImageIcon("Imported things/SpeedUp.gif").getImage();
+                    g.drawImage(image1, ptr.getX(), ptr.getY(), ptr.getWidth(), ptr.getHeight(), null);
+                }
             }
         }
         // finishing game if states
@@ -491,7 +523,6 @@ public class GamePanel extends JPanel implements ActionListener {
                         if (powerStart) brick.setValue(brick.getValue() - 2);
                         else brick.setValue(brick.getValue() - 1);
                         if (brick.getValue() <= 0) {
-                            System.out.println(brick.getBrickType().toString());
                             score += (brick.getFixedValue() - (panelTimer.getSeconds() / 10));
                             brickArrayList.remove(brick);
                             // halat haye mokhtalef
@@ -514,7 +545,6 @@ public class GamePanel extends JPanel implements ActionListener {
                     Rectangle itemRect = new Rectangle(item.getX(), item.getY(), item.getWidth(), item.getHeight());
 
                     if (ballRect.intersects(itemRect)) {
-                        System.out.println(item.getItemType().toString());
                         regularItems.remove(item);
                         // halat haye mokhtalef
                         if (item.getItemType().equals(ItemType.ADD_BALL)) ballToAdd++;
