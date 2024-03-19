@@ -347,20 +347,6 @@ public class GamePanel extends JPanel implements ActionListener {
             xVel /= 2;
             yVel /= 2;
         }
-//        if (Math.abs(dx) > Math.abs(dy)) {
-//            yVel = -1;
-//            xVel = Math.abs(dx / dy);
-//            if (dx < 0) xVel = -1 * xVel;
-//        }
-//        else {
-//            if (dx < 0) xVel = -1;
-//            else xVel = 1;
-//            yVel = -1 * Math.abs(dy / dx);
-//        }
-//        System.out.println("a: " + a);
-//        System.out.println(xVel + " " + yVel);
-
-//        xVel = (xVel < 0 ? Math.floor(xVel) : Math.ceil(xVel));
         xVel = Math.round(xVel);
         yVel = Math.floor(yVel);
         for (Ball ptr : ballArrayList) {

@@ -57,10 +57,49 @@ public class FileManager {
         String formattedDate = date.format(formatter);
 
         try (FileWriter writer = new FileWriter(gameHistoryPath, true)) {
-            writer.write(formattedDate + "$" + username + "$" + timer.toString() + "$" + Integer.valueOf(score).toString() + "\n");
+            writer.write(formattedDate + "&&" + username + "&&" + timer.toString() + "&&" + Integer.valueOf(score).toString() + "\n");
         }
         catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public static int GameCounter() {
+        int cnt = 0;
+        try {
+            FileReader fileReader = new FileReader(gameHistoryPath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                cnt++;
+            }
+            bufferedReader.close();
+            fileReader.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return cnt;
+    }
+    public static String[][] LoadGame() {
+        String[][] out = new String[GameCounter()][4];
+        try {
+            FileReader fileReader = new FileReader(gameHistoryPath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            int ptr = 0;
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] keep = line.split("&&");
+                out[ptr] = keep;
+                ptr++;
+            }
+            bufferedReader.close();
+            fileReader.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return out;
     }
 }
